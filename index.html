@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Projetos</title>
+    <style>
+        body {
+            font-family: "Times New Roman", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+            color: #475569;
+            background-image: url('https://museuabertodeastronomia.com.br/wp-content/uploads/2019/07/blog.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            filter: brightness(85%);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            color: #475569;
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            background-color: #fff;
+            margin: 15px;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #project-details {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .experiment-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        #project-name {
+            font-size: 24px;
+            color: #475569;
+            margin-bottom: 10px;
+        }
+
+        #project-description {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #475569;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .task-item.completed {
+            background-color: #e0ffe0;
+            text-decoration: line-through;
+        }
+
+        .task-item .task-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .task-item .task-actions .task-action {
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .task-item .task-actions .task-action:hover {
+            color: red;
+        }
+
+        .task-item .task-actions .task-complete:hover {
+            color: green;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Projetos Científicos</h1>
+    <ul id="project-list">
+        <li>
+            <img src="https://www.curitiba.pr.leg.br/atividade-parlamentar/legislacao/imagens/bandeira-do-brasil.png/image" alt="Experimento A" class="experiment-image">
+            <a href="#" onclick="showProject(1)">Estudo de Resistência à Tração de Materiais Compósitos - Intacto</a>
+        </li>
+        <li>
+            <img src="https://www.gov.br/agricultura/pt-br/assuntos/relacoes-internacionais/agro-mais-investimentos/imagens/bandeira-dos-estados-unidos.png/@@images/image.png" alt="Experimento B" class="experiment-image">
+            <a href="#" onclick="showProject(2)">Efeito da Radiação Ultravioleta na Germinação de Sementes - Danificado</a>
+        </li>
+        <li>
+            <img src="https://img.freepik.com/vetores-gratis/ilustracao-de-bandeira-alema_53876-27101.jpg?size=626&ext=jpg&ga=GA1.1.1546980028.1715040000&semt=ais" alt="Experimento C" class="experiment-image">
+            <a href="#" onclick="showProject(3)">Análise da Degradação de Materiais Poliméricos em Ambientes Agressivos - Intacto</a>
+        </li>
+    </ul>
+
+    <div id="project-details">
+        <a href="#" class="back-button" onclick="showProjectList()">Voltar</a>
+        <h2 id="project-name"></h2>
+        <p id="project-description"></p>
+        <p><strong>País:</strong> <span id="project-country"></span></p>
+        <p><strong>Status:</strong> <span id="project-status"></span></p>
+
+        <div id="tasks-section" style="display: none;">
+            <h3>Tarefas para Recuperação</h3>
+            <ul id="tasks-list"></ul>
+            <input type="text" id="new-task" placeholder="Nova tarefa">
+            <button onclick="addTask()">Adicionar Tarefa</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projects = [
+                { id: 1, name: 'Estudo de Resistência à Tração de Materiais Compósitos', description: 'Este experimento analisa a resistência à tração de materiais compósitos em diferentes condições ambientais, visando entender melhor suas propriedades estruturais e aplicabilidade em projetos de engenharia.', country: 'Brasil', status: 'Intacto' },
+                { id: 2, name: 'Efeito da Radiação Ultravioleta na Germinação de Sementes', description: 'Este experimento investiga como a exposição à radiação ultravioleta afeta a germinação de sementes de plantas, com o objetivo de compreender os mecanismos de proteção das plantas contra danos causados pela radiação solar', country: 'EUA', status: 'Danificado' },
+                { id: 3, name: 'Análise da Degradação de Materiais Poliméricos em Ambientes Agressivos', description: 'Neste experimento, são estudados os efeitos da exposição a ambientes agressivos, como alta umidade e temperatura, na degradação de materiais poliméricos, buscando desenvolver soluções para aumentar sua durabilidade e resistência em aplicações industriais.', country: 'Alemanha', status: 'Intacto' }
+            ];
+
+            const tasks = {
+                2: [{ id: 1, task: 'Reparar painel solar' }, { id: 2, task: 'Verificar conexões' }]
+            };
+
+            const projectList = document.getElementById('project-list');
+            const projectDetails = document.getElementById('project-details');
+
+            window.showProject = function(projectId) {
+                const project = projects.find(p => p.id === projectId);
+                document.getElementById('project-name').innerText = project.name;
+                document.getElementById('project-description').innerText = project.description;
+                document.getElementById('project-country').innerText = project.country;
+                document.getElementById('project-status').innerText = project.status;
+
+                projectList.style.display = 'none';
+                projectDetails.style.display = 'block';
+
+                if (project.status.toLowerCase() === 'danificado') {
+                    document.getElementById('tasks-section').style.display = 'block';
+                    loadTasks(projectId);
+                } else {
+                    document.getElementById('tasks-section').style.display = 'none';
+                }
+            }
+
+            window.showProjectList = function() {
+                projectList.style.display = 'flex';
+                projectDetails.style.display = 'none';
+            }
+
+            function loadTasks(projectId) {
+                const tasksList = document.getElementById('tasks-list');
+                tasksList.innerHTML = '';
+                if (tasks[projectId]) {
+                    tasks[projectId].forEach(task => {
+                        const listItem = document.createElement('li');
+                        listItem.classList.add('task-item');
+                        listItem.innerHTML = `
+                            <span>${task.task}</span>
+                            <div class="task-actions">
+                                <span class="task-complete task-action" onclick="completeTask(${projectId}, ${task.id})">✔️</span>
+                                <span class="task-delete task-action" onclick="deleteTask(${projectId}, ${task.id})">❌</span>
+                            </div>
+                        `;
+                        tasksList.appendChild(listItem);
+                    });
+                }
+            }
+
+            window.addTask = function() {
+                const projectId = projects.find(p => p.name === document.getElementById('project-name').innerText).id;
+                const newTask = document.getElementById('new-task').value;
+                if (!tasks[projectId]) {
+                    tasks[projectId] = [];
+                }
+                const taskId = tasks[projectId].length + 1;
+                tasks[projectId].push({ id: taskId, task: newTask });
+
+                const tasksList = document.getElementById('tasks-list');
+                const listItem = document.createElement('li');
+                listItem.classList.add('task-item');
+                listItem.innerHTML = `
+                    <span>${newTask}</span>
+                    <div class="task-actions">
+                        <span class="task-complete task-action" onclick="completeTask(${projectId}, ${taskId})">✔️</span>
+                        <span class="task-delete task-action" onclick="deleteTask(${projectId}, ${taskId})">❌</span>
+                    </div>
+                `;
+                tasksList.appendChild(listItem);
+                document.getElementById('new-task').value = '';
+            }
+
+            window.deleteTask = function(projectId, taskId) {
+                tasks[projectId] = tasks[projectId].filter(task => task.id !== taskId);
+                loadTasks(projectId);
+            }
+
+            window.completeTask = function(projectId, taskId) {
+                const taskIndex = tasks[projectId].findIndex(task => task.id === taskId);
+                const taskItem = document.querySelector(`#tasks-list .task-item:nth-child(${taskIndex + 1})`);
+                taskItem.classList.toggle('completed');
+            }
+        });
+    </script>
+</body>
+</html>
